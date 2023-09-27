@@ -33,7 +33,7 @@ Taskify is a task management application that provides a set of RESTful API endp
 
 - **HTTP Method:** POST
 - **Endpoint:** `/register`
-- **Description:** Allows users to register for the Taskify app. Users must provide a username, password, and optional details.
+- **Description:** Allows users to register for the Taskify app. Users must provide a username, password.
 
 ### POST /login
 
