@@ -7,11 +7,8 @@ from app.schemas.schema import UserCreate, UserLogin
 from app.service.auth import create_jwt_token, hash_password, verify_password
 from app.service.userCrud import create_user, is_username_taken
 
- 
-
 user = APIRouter()
 
- 
 
 @user.post("/register", response_model=dict)
 def register(request: UserCreate, db: Session = Depends(get_db)):
@@ -35,7 +32,7 @@ def register(request: UserCreate, db: Session = Depends(get_db)):
 
 
 @user.post("/login", response_model=dict)
-def login(request: UserLogin, db: Session = Depends(get_db)):
+def getToken(request: UserLogin, db: Session = Depends(get_db)):
     # # Check if the username is present in database or not 
     dbResp = is_username_taken(db, request.username)
     

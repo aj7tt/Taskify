@@ -1,4 +1,5 @@
-from datetime import datetime, timedelta 
+from datetime import datetime, timedelta
+from fastapi import Depends, Header 
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext  # For password hashing
 from jose import jwt
@@ -18,12 +19,46 @@ def hash_password(password: str) -> str:
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
 
+#create jwt token 
 def create_jwt_token(user_id: int, username: str) -> str:
     expiration = datetime.utcnow() + timedelta(minutes=TOKEN_EXP_MIN)
+    user_id = str(user_id)
+    
     payload = {
         "sub": user_id,
-        "username": username,
+        "userName": username,
         "exp": expiration
     }
-    token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+    token = jwt.encode(payload, SECRET_KEY, algorithm= ALGORITHM)
     return token
+
+
+#decode jwt token 
+def get_current_user_authorizer(token = Header(None)) -> dict:
+    # Check if the token is missing
+    if token is None:
+        return {"error": "Token missing"}
+
+    try:
+        # Attempt to decode the JWT token
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+
+        # Check if the "sub" claim is missing or not a string
+        if "sub" not in payload or not isinstance(payload["sub"], str):
+            return {"error": "Invalid token: Missing or invalid 'sub' claim"}
+
+        # Token successfully decoded, return the payload
+        return payload
+    except jwt.ExpiredSignatureError:
+        # Handle the case where the token has expired
+        return {"error": "Token has expired"}
+    except jwt.JWTError:
+        # Handle other JWT-related errors
+        return {"error": "Invalid token"}
+    except Exception as e:
+        # Handle unexpected errors (e.g., invalid SECRET_KEY)
+        return {"error": f"An error occurred: {str(e)}"}
+    
+
+
+
