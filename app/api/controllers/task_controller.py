@@ -37,9 +37,9 @@ def updateTask(task_id: int, request: TaskUpdate, current_user: User = Depends(g
     return dbResp
 
 @task.patch("/tasks/{task_id}/status", response_model=Task)
-def updateTaskStatus(task_id: int, status: bool, current_user: User = Depends(get_current_user_authorizer), db: Session = Depends(get_db)):
+def updateTaskStatus(task_id: int, current_user: User = Depends(get_current_user_authorizer), db: Session = Depends(get_db)):
     user_id = int(current_user['sub'])
-    dbResp = update_task_status(db, task_id, status, user_id)    
+    dbResp = update_task_status(db, task_id, user_id)    
     return dbResp
 
 
