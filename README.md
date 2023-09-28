@@ -7,6 +7,16 @@
 
 Taskify is an application that allows users to manage tasks efficiently. This API documentation provides details on the available endpoints and how to interact with them. Taskify is built using FastAPI, JWT (JSON Web Tokens), SQLAlchemy, and Pydantic to ensure secure and efficient task management.
 
+Taskify API documentation follows RESTful API design principles effectively by:
+
+- Organizing around resources.
+- Using appropriate HTTP methods.
+- Naming endpoints descriptively.
+- Implementing authentication.
+- Structuring documentation logically.
+- Properly handling errors.
+- Summarizing the API's purpose.
+
 ## Table of Contents
 1. [Introduction](#introduction)
 2. [Authentication](#authentication)
