@@ -33,7 +33,7 @@ def register(request: UserCreate, db: Session = Depends(get_db)):
 
 @user.post("/login", response_model=dict)
 def getToken(request: UserLogin, db: Session = Depends(get_db)):
-    # # Check if the username is present in database or not 
+    # Check if the username is present in database or not 
     dbResp = is_username_taken(db, request.username)
     
     if dbResp is None or not verify_password(request.password, dbResp.password):

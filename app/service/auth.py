@@ -1,5 +1,5 @@
 from datetime import datetime, timedelta
-from fastapi import Depends, Header 
+from fastapi import Depends, HTTPException, Header 
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext  # For password hashing
 from jose import jwt
@@ -34,10 +34,10 @@ def create_jwt_token(user_id: int, username: str) -> str:
 
 
 #decode jwt token 
-def get_current_user_authorizer(token = Header(None)) -> dict:
+def get_current_user_authorizer(token: str = Header(None)) -> dict:
     # Check if the token is missing
     if token is None:
-        return {"error": "Token missing"}
+        raise HTTPException(status_code=401, detail="Token missing")
 
     try:
         # Attempt to decode the JWT token
@@ -45,19 +45,16 @@ def get_current_user_authorizer(token = Header(None)) -> dict:
 
         # Check if the "sub" claim is missing or not a string
         if "sub" not in payload or not isinstance(payload["sub"], str):
-            return {"error": "Invalid token: Missing or invalid 'sub' claim"}
+            raise HTTPException(status_code=401, detail="Invalid token: Missing or invalid 'sub' claim")
 
         # Token successfully decoded, return the payload
         return payload
     except jwt.ExpiredSignatureError:
-        # Handle the case where the token has expired
-        return {"error": "Token has expired"}
+        raise HTTPException(status_code=401, detail="Token has expired")
     except jwt.JWTError:
-        # Handle other JWT-related errors
-        return {"error": "Invalid token"}
+        raise HTTPException(status_code=401, detail="Invalid token")
     except Exception as e:
-        # Handle unexpected errors (e.g., invalid SECRET_KEY)
-        return {"error": f"An error occurred: {str(e)}"}
+        raise HTTPException(status_code=500, detail=f"An error occurred: {str(e)}")
     
 
 

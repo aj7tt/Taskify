@@ -37,13 +37,14 @@ def get_task_by_id(db: Session, task_id: int, user_id: int):
         raise HTTPException(status_code=404, detail=f"Task not found for userId {user_id}")
     return task
 
-def update_task_status(db: Session, task_id: int, status: bool, user_id: int):
+def update_task_status(db: Session, task_id: int, user_id: int):
     try:
         # Retrieve the task by ID and user_id
         task = get_task_by_id(db, task_id, user_id)
 
         # Update  the status field
-        task.status = status
+        # task.status = status
+        task.status = not task.status  # Toggle the status
 
         # Commit the changes to the database
         db.commit()
