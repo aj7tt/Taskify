@@ -12,8 +12,7 @@ class UserBase(BaseModel):
         if not re.match(r'^[a-zA-Z0-9]+$', value):
             raise ValueError("Username must contain only alphanumeric characters")
         return value
-    
-    
+
 
     password: constr(min_length=4)  # Password with minimum length of 4 characters  
 
