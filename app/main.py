@@ -12,7 +12,7 @@ from app.configs.dbConfig import Base, engine
 from app.api.api import router as apiRouter
 from app.service.auth import get_current_user_authorizer
 
-# Create an instance of the FastAPI class with project title and version
+# Create an instance of the FastAPI class
 app = FastAPI()
 
 # Define a route for the root URL to redirect to documentation

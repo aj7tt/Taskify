@@ -20,9 +20,8 @@ def createTask(request: TaskCreate, current_user: User = Depends(get_current_use
 @task.get("/tasks")
 def getTasks(current_user: User = Depends(get_current_user_authorizer), db: Session = Depends(get_db)):
     user_id = int(current_user['sub'])
-    tasks = get_tasks(db, user_id)
-    
-    return tasks
+    dbResp = get_tasks(db, user_id)
+    return dbResp
 
 @task.get("/tasks/{task_id}", response_model=Task)
 def getTask(task_id: int, current_user: User = Depends(get_current_user_authorizer), db: Session = Depends(get_db)):
