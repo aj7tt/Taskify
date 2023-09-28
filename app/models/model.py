@@ -2,6 +2,7 @@
 from sqlalchemy import Column, Integer, String, DateTime, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from sqlalchemy.sql import func
+from sqlalchemy import Column, Date
 
 from app.configs.dbConfig import Base
 
@@ -29,7 +30,7 @@ class Task(Base):
     # Task properties
     task_name = Column(String(255), nullable=False)
     description = Column(String)
-    due_date = Column(DateTime)
+    due_date = Column(Date)
     status = Column(Boolean, default=False)
 
     # Foreign key to link to the User model
