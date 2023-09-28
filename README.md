@@ -9,12 +9,12 @@ Taskify is an application that allows users to manage tasks efficiently. This AP
 
 Taskify API documentation follows RESTful API design principles effectively by:
 
-- Organizing around resources.
+- Organizing around resources. User , Task...
 - Using appropriate HTTP methods.
-- Naming endpoints descriptively.
-- Implementing authentication.
+- Naming endpoints descriptively. task/{task_id}
+- Implementing authentication. using JWT
 - Structuring documentation logically.
-- Properly handling errors.
+- Properly handling errors. using HTTPException & pydantic
 - Summarizing the API's purpose.
 
 ## Table of Contents
